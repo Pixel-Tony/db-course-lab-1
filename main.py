@@ -54,10 +54,10 @@ def drop_table(cur: cursor):
 
 
 def bind_benchmark(dsn: str, n_threads: int, count: int):
-    def _wrap(f, args: tuple, kwargs: dict):
+    def _wrap(f):
         def target():
             with pg.connect(dsn) as conn, conn.cursor() as cur:
-                f(*args, conn=conn, cur=cur, count=count, **kwargs)
+                f(conn=conn, cur=cur, count=count)
 
         print(f"Виконується {f.__name__}...")
 
